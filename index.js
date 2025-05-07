@@ -28,6 +28,29 @@ app.get("/chats",async (req, res) => {
 	   res.render("index.ejs", {chats});
 });
 
+//New route
+app.get("/chats/new", (req,res) => {
+		res.render("new.ejs");
+});
+
+//Create route
+app.post("/chats", (req,res) =>{
+	  let {from, to, msg} = req.body;
+	  let newChat = new Chat({
+		  from:from,
+		  to:to,
+		  msg:msg,
+		  created_at: new Date()
+	  });
+	  newChat.save().then(res =>  {
+		  console.log("chat saved");
+	  }).
+	  catch(err => {
+			console.log(err);
+	  });
+	  res.redirect("/chats");
+});
+
 let chat1 = new Chat({
   from: "neha",
   to: "priya",
